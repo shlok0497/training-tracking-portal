@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Dashboard - Associate Progress</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #1e293b;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f1f5f9;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            background-color: #e2e8f0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .reminder-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .reminder-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen">
+        <!-- Sidebar Navigation -->
+        <div class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg">
+            <div class="flex items-center justify-center h-16 px-4 bg-blue-500 text-white">
+                <h1 class="text-xl font-bold">Manager Portal</h1>
+            </div>
+            <nav class="mt-6">
+                <div class="px-4 py-2 text-gray-500 font-medium uppercase text-xs tracking-wider">
+                    Main
+                </div>
+                <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600">
+                    <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
+                </a>
+                <a href="#" class="block px-4 py-3 bg-blue-50 text-blue-600 font-medium">
+                    <i class="fas fa-users mr-3"></i> Associates
+                </a>
+                <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600">
+                    <i class="fas fa-chart-line mr-3"></i> Reports
+                </a>
+                <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600">
+                    <i class="fas fa-cog mr-3"></i> Settings
+                </a>
+                
+                <div class="px-4 py-2 text-gray-500 font-medium uppercase text-xs tracking-wider mt-6">
+                    Quick Actions
+                </div>
+                <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600">
+                    <i class="fas fa-plus-circle mr-3"></i> New Associate
+                </a>
+                <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600">
+                    <i class="fas fa-bell mr-3"></i> Reminders
+                </a>
+            </nav>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="ml-64 p-6">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Associate Progress Tracking</h2>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Search associates..." class="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-filter mr-2"></i> Filter
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-gray-500 text-sm">Total Associates</p>
+                            <h3 class="text-2xl font-bold">24</h3>
+                        </div>
+                        <div class="bg-blue-100 p-3 rounded-full">
+                            <i class="fas fa-users text-blue-500"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-gray-500 text-sm">Completed Tasks</p>
+                            <h3 class="text-2xl font-bold">156</h3>
+                        </div>
+                        <div class="bg-green-100 p-3 rounded-full">
+                            <i class="fas fa-check-circle text-green-500"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-gray-500 text-sm">Pending Tasks</p>
+                            <h3 class="text-2xl font-bold">32</h3>
+                        </div>
+                        <div class="bg-yellow-100 p-3 rounded-full">
+                            <i class="fas fa-exclamation-circle text-yellow-500"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-4">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-gray-500 text-sm">Overdue Tasks</p>
+                            <h3 class="text-2xl font-bold">5</h3>
+                        </div>
+                        <div class="bg-red-100 p-3 rounded-full">
+                            <i class="fas fa-clock text-red-500"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Associates Table -->
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-medium text-gray-800">Associate Progress</h3>
+                        <div class="flex space-x-2">
+                            <button class="text-gray-500 hover:text-gray-700">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                            <button class="text-gray-500 hover:text-gray-700">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Associate</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Progress</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Update</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <!-- Associate 1 -->
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <img class="h-10 w-10 rounded-full" src="https://randomuser.me/api/portraits/women/32.jpg" alt="">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Sarah Johnson</div>
+                                            <div class="text-sm text-gray-500">sarah.johnson&#64;example.com</div>
+
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">Sales Associate</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">85%</div>
+                                    <div class="progress-bar mt-1 w-full">
+                                        <div class="progress-fill bg-green-500" style="width: 85%"></div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="status-badge bg-green-100 text-green-800">On Track</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    2 hours ago
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                </td>
+                            </tr>
+                            
+                            <!-- Associate 2 -->
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <img class="h-10 w-10 rounded-full" src="https://randomuser.me/api/portraits/men/75.jpg" alt="">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Michael Chen</div>
+                                            <div class="text-sm text-gray-500">michael.chen&#64;example.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">Marketing Specialist</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">45%</div>
+                                    <div class="progress-bar mt-1 w-full">
+                                        <div class="progress-fill bg-yellow-500" style="width: 45%"></div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="status-badge bg-yellow-100 text-yellow-800">Pending</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    1 day ago
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                    <button class="reminder-btn bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md text-sm">
+                                        <i class="fas fa-bell mr-1"></i> Remind
+                                    </button>
+                                </td>
+                            </tr>
+                            
+                            <!-- Associate 3 -->
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <img class="h-10 w-10 rounded-full" src="https://randomuser.me/api/portraits/women/68.jpg" alt="">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Emily Rodriguez</div>
+                                            <div class="text-sm text-gray-500">emily.rodriguez&#64;example.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">Customer Support</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">92%</div>
+                                    <div class="progress-bar mt-1 w-full">
+                                        <div class="progress-fill bg-green-500" style="width: 92%"></div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="status-badge bg-green-100 text-green-800">Completed</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    30 minutes ago
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                </td>
+                            </tr>
+                            
+                            <!-- Associate 4 -->
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <img class="h-10 w-10 rounded-full" src="https://randomuser.me/api/portraits/men/42.jpg" alt="">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">David Wilson</div>
+                                            <div class="text-sm text-gray-500">david.wilson&#64;example.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">IT Specialist</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">30%</div>
+                                    <div class="progress-bar mt-1 w-full">
+                                        <div class="progress-fill bg-red-500" style="width: 30%"></div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="status-badge bg-red-100 text-red-800">Overdue</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    3 days ago
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                    <button class="reminder-btn bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm">
+                                        <i class="fas fa-bell mr-1"></i> Remind
+                                    </button>
+                                </td>
+                            </tr>
+                            
+                            <!-- Associate 5 -->
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <img class="h-10 w-10 rounded-full" src="https://randomuser.me/api/portraits/women/44.jpg" alt="">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Jessica Lee</div>
+                                            <div class="text-sm text-gray-500">jessica.lee&#64;example.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">HR Coordinator</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">65%</div>
+                                    <div class="progress-bar mt-1 w-full">
+                                        <div class="progress-fill bg-blue-500" style="width: 65%"></div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="status-badge bg-blue-100 text-blue-800">In Progress</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    5 hours ago
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+                    <div class="text-sm text-gray-500">
+                        Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">24</span> associates
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1 rounded-md border border-gray-300 text-gray-500 hover:bg-gray-50">
+                            Previous
+                        </button>
+                        <button class="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600">
+                            1
+                        </button>
+                        <button class="px-3 py-1 rounded-md border border-gray-300 text-gray-500 hover:bg-gray-50">
+                            2
+                        </button>
+                        <button class="px-3 py-1 rounded-md border border-gray-300 text-gray-500 hover:bg-gray-50">
+                            3
+                        </button>
+                        <button class="px-3 py-1 rounded-md border border-gray-300 text-gray-500 hover:bg-gray-50">
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Functionality for reminder buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const reminderButtons = document.querySelectorAll('.reminder-btn');
+            
+            reminderButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const row = this.closest('tr');
+                    const associateName = row.querySelector('td:first-child .text-sm.font-medium').textContent;
+                    
+                    // Change button appearance temporarily
+                    const originalHTML = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check mr-1"></i> Sent';
+                    this.classList.remove('bg-yellow-500', 'bg-red-500', 'hover:bg-yellow-600', 'hover:bg-red-600');
+                    this.classList.add('bg-green-500', 'hover:bg-green-600');
+                    
+                    // Show notification
+                    showNotification(`Reminder sent to ${associateName}`);
+                    
+                    // Reset button after 2 seconds
+                    setTimeout(() => {
+                        this.innerHTML = originalHTML;
+                        this.classList.remove('bg-green-500', 'hover:bg-green-600');
+                        if (this.classList.contains('bg-yellow-500')) {
+                            this.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
+                        } else {
+                            this.classList.add('bg-red-500', 'hover:bg-red-600');
+                        }
+                    }, 2000);
+                });
+            });
+            
+            function showNotification(message) {
+                const notification = document.createElement('div');
+                notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center animate-fade-in';
+                notification.innerHTML = `
+                    <i class="fas fa-check-circle mr-2"></i>
+                    ${message}
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.classList.add('animate-fade-out');
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 500);
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
+
